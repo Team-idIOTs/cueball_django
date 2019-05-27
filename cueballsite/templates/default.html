@@ -1,0 +1,31 @@
+{% load static %}<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title %}Cueball{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	{% block stylesheet %}{% endblock %}  <!-- HERE -->
+  </head>
+  <body>
+    {% block body %}  <!-- HERE -->
+    <div id = "content">
+		<a href="{% url 'home' %}" ><img src="{% static 'cueball/logo.png' %}" class="logo"></a>      
+			<div class="container">
+			{% block content %}
+			{% endblock %}
+		</div>
+	</div>
+	<div class="clearbottom"></div>
+	  {% block footer %}
+	   <div id="footer">
+		<ul class = "footer">
+			<li class="footer"><a href="url">About Us</a></li>
+			<li class="footer"><a href="url">Help</a></li>
+			<li class="footer"><a href="url">Terms and Conditions</a></li>
+		</div>
+		{% endblock footer %}
+    {% endblock body %}  <!-- AND HERE -->
+  </body>
+</html>

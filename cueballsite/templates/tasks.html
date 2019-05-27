@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Tasks and Reminders{% endblock %}
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item"><a href="{% url 'tasks' %}">Tasks</a></li>
+{% endblock %}
+
+{% block content %}
+  <table class="table">
+    <thead class="thead-inverse">
+      <tr>
+        <th>Tasks</th>
+        <th>Reminders</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for task in tasks %}
+        <tr>
+          <td>
+            <a href="{% url 'task_topic' task.pk %}">{{ task.name }}</a>
+            <small class="text-muted d-block">{{ task.message }}</small>
+          </td>
+          <td class="align-middle">0</td>
+          <td></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+	  
+{% endblock %}
