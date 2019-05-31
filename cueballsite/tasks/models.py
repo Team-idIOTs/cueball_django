@@ -3,10 +3,11 @@ from django.db import models
 
 # Create your models here.
 class Task(models.Model):
-	type = models.CharField(max_length=1000)
+	type = models.CharField(max_length=100)
 	name = models.CharField(max_length=30, unique=True)
 	audio = models.FileField(upload_to='media/', null=True, blank=True)
-	message = models.TextField(max_length=1000)
+	message = models.TextField(max_length=100)
+	starter = models.ForeignKey(User, related_name='task', on_delete=models.CASCADE)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(null=True)
 	
@@ -30,12 +31,12 @@ class Reminders(models.Model):
 		(SAT, 'Saturday'),
 		(SUN, 'Sunday'),
 		]
-	task_name = models.ForeignKey(Task, related_name='reminders', on_delete=models.CASCADE)
+	task = models.ForeignKey(Task, related_name='reminders', on_delete=models.CASCADE)
 	day = models.CharField(max_length=1, choices=DAY_OF_WEEK)
-	start_time = models.TimeField()
-	end_time = models.TimeField()
-	interval_hour = models.IntegerField()
-	interval_min = models.IntegerField()
+	start_time = models.TimeField(null=True)
+	end_time = models.TimeField(null=True)
+	interval_hour = models.IntegerField(null=True)
+	interval_min = models.IntegerField(null=True)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(null=True)
 	created_by = models.ForeignKey(User, related_name='reminders', on_delete=models.CASCADE)

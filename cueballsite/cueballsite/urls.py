@@ -25,8 +25,11 @@ urlpatterns = [
 	path('', task_views.home, name='home'),
 	path('cueball/', task_views.home, name='home'),
 	path('cueball/tasks/', task_views.tasks, name='tasks'),
+	path('cueball/tasks/<int:pk>/', task_views.task_topic,  name='task_topic'),
 	path('cueball/tasks/addnewtask', task_views.add_task, name='add_task'),
-	path('cueball/tasks/<int:pk>/', task_views.task_topic, name='task_topic'),
+	#path('cueball/tasks/<int:pk>/reminder/<int:reminder_pk>', task_views.reminder, name='reminder_topic'),
+	#path('cueball/tasks/<int:pk>/reminder/addreminder', task_views.add_reminder, name='add_reminder'),
+	
 	path('cueball/monitor/', task_views.monitor, name='monitor'),\
 	path('cueball/settings/', task_views.settings, name='settings'),
 	path('admin/', admin.site.urls),

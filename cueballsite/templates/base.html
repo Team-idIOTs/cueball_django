@@ -5,6 +5,7 @@
     <title>{% block title %}Cueball{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	{% block stylesheet %}{% endblock %}  <!-- HERE -->
   </head>
@@ -48,7 +49,7 @@
 	  {% if user.is_authenticated %}
 		<ul class="nav">
 			<a {% if title == 'tasks' %}class="active"{% endif %} href="{% url 'tasks' %}">Reminders</a>
-			<a {% if title == 'monitor' %}class="active"{% endif %} href="{% url 'monitor' %}">Moniter</a>
+			<a {% if title == 'monitor' %}class="active"{% endif %} href="{% url 'monitor' %}">Monitor</a>
 			<a {% if title == 'settings' %}class="active"{% endif %} href="{% url 'settings' %}">Settings</a>
 		</ul>
 	  {% endif %}

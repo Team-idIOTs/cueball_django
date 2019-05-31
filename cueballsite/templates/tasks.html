@@ -3,29 +3,38 @@
 {% block title %}Tasks and Reminders{% endblock %}
 
 {% block breadcrumb %}
-  <li class="breadcrumb-item"><a href="{% url 'tasks' %}">Tasks</a></li>
+  <li class="breadcrumb-item"><a href="{% url 'tasks' %}">Tasks</a>
+	<a href="{% url 'add_task' %}" class="btn btn-outline-secondary btn-sm">
+	  <i class="fa fa-plus"></i> Add Task 
+	</a>
+  <li>
 {% endblock %}
 
 {% block content %}
-  <table class="table">
+  <table class="table table-hover">
     <thead class="thead-inverse">
       <tr>
         <th>Tasks</th>
+		<th>User</th>
         <th>Reminders</th>
+		<th>Latest Update</th>
       </tr>
-    </thead>
-    <tbody>
-      {% for task in tasks %}
+	<tbody>  
+	{% for task in tasks %}
         <tr>
           <td>
             <a href="{% url 'task_topic' task.pk %}">{{ task.name }}</a>
-            <small class="text-muted d-block">{{ task.message }}</small>
-          </td>
+            <small class="text-muted d-block">{{ task.type }}</small>
+          </td>		
+		  <td>{{ task.starter }}</td>
           <td class="align-middle">0</td>
-          <td></td>
-        </tr>
+		  {% if task.updated_at == null %}
+		  <td>{{ task.created_at }}</td>
+		  {% else %}
+		  <td>{{ task.updated_at }}</td>
+		  {% endif %}
+		 </tr>
       {% endfor %}
     </tbody>
-  </table>
-	  
+  </table>  
 {% endblock %}

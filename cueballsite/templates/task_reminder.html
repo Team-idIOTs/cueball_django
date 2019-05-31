@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  {{ task.name }} - {{ block.super }}
+{% endblock %}
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item"><a href="{% url 'tasks' %}">Tasks</a></li>
+  <li class="breadcrumb-item">{{ task.name }}
+  	<a href="{#% url 'add_reminder' %#}" class="btn btn-outline-secondary btn-sm">
+	  <i class="fa fa-plus"></i> Add New Reminder for {{ task.name }}
+	</a>
+  <li>
+ 
+{% endblock %}
+
+{% block content %}
+  <table class="tabletable-hover">
+    <thead class="thead-inverse">
+      <tr>
+        <th>Reminder</th>
+        <th>Days</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Interval</th>
+      </tr>
+    </thead>
+
+  </table>  
+{% endblock %}
