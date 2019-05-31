@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
-from .models import Task, Reminders
+from .models import Task, Reminder
 from .forms import NewTaskForm, NewReminderForm
 
 
@@ -20,12 +20,6 @@ def tasks(request):
 	return render(request, 'tasks.html', {'tasks':tasks, 'title':title})
 
 @login_required
-def task_topic(request, pk):
-	title = "tasks"
-	task = get_object_or_404(Task, pk=pk)
-	return render(request, 'task_reminder.html', {'task': task, 'title':title})
-
-@login_required
 def monitor(request):
 	title = "monitor"
 	context = {'title': title}
@@ -36,6 +30,20 @@ def settings(request):
     title = "settings"
     context = {'title': title}
     return render(request, 'settings.html', context)
+
+@login_required
+def task_topic(request, pk):
+	title = "tasks"
+	task = get_object_or_404(Task, pk=pk)
+	context = {'task': task, 'title':title}
+	return render(request, 'topic.html', context)
+
+@login_required
+def task_reminder(request, pk, reminder_pk):
+	title = "tasks"
+	reminder = get_object_or_404(Reminder, task_id=pk, id=reminder_pk)
+	context = {'reminder':reminder, 'title':title}
+	return render(request, 'task_reminder.html', context)
 	
 @login_required
 def add_task(request):
@@ -46,35 +54,29 @@ def add_task(request):
 			task = form.save(commit=False)
 			task.starter = request.user
 			task.save()
-			reminder = Reminders.objects.create(
+			reminder = Reminder.objects.create(
 				task = task,
 				created_by = request.user,
 			)
-			return redirect('tasks')
+			return redirect('task_topic', task.id)
 	else:
 		form = NewTaskForm()
 	return render(request, 'addtask.html', {'form':form})
 
 @login_required
-def add_reminder(request, pk, task_pk):
+def add_reminder(request, pk):
 	title = 'tasks'
-	reminder = get_object_or_404(Reminders, task_pk=pk, pk=reminder_pk)
+	reminder = get_object_or_404(Reminder, task_id=pk)
 	if request.method == 'POST':
 		form = NewReminderForm(request.POST)
 		if form.is_valid():
 			reminder = form.save(commit=False)
-			reminer.task = task
-			task.starter = request.user
+			reminder.task = task
+			reminder.created_by = request.user
 			reminder.save()
-			Reminders.objects.create(
-				day='day',
-			start_time='start_time',
-				end_time='end_time'
-				#interval_hour='interval_hour'
-				#interval_min='interval_min'
-				#created_by = request.user
-			)	
-			return redirect('tasks', pk=pk, task_pk = task_pk)
+			
+			return redirect('task_reminder', task_id=pk, id=reminder_pk)
+
 	else:
-		form = NewReimderForm()
+		form = NewReminderForm()
 	return render(request, 'addreminder.html', {'form':form})

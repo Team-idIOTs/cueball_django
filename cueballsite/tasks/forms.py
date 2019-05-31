@@ -1,8 +1,23 @@
 from django import forms
-from django.core.validators import EMPTY_VALUES
 
-from .models import Task, Reminders
+from .models import Task, Reminder
 
+MON = 'M'
+TUE = 'T'
+WED = 'W'
+THU = 'R'
+FRI = 'F'
+SAT = 'S'
+SUN = 'U'
+DAY_OF_WEEK = [
+	(MON, 'Monday'),
+	(TUE, 'Tuesday'),
+	(WED, 'Wednesday'),
+	(THU, 'Thursday'),
+	(FRI, 'Friday'),
+	(SAT, 'Saturday'),
+	(SUN, 'Sunday'),
+	]
 
 class NewTaskForm(forms.ModelForm):
 
@@ -40,37 +55,23 @@ class NewTaskForm(forms.ModelForm):
 
 class NewReminderForm(forms.ModelForm):
 	
-	day = forms.CharField(
-		widget=forms.TextInput(
-			attrs={'placeholder': 'Days of the Week'}
-		),
-		max_length=100,
+	day = forms.MultipleChoiceField(
+		widget=forms.CheckboxSelectMultiple,
+		choices = DAY_OF_WEEK,
 	)	
-	
-	start_time = forms.TimeField(
-		widget=forms.TextInput(
-		attrs={'placeholder': 'When do you want to start the reminders'}
-		),
-	)
-	
-	end_time = forms.TimeField(
-		widget=forms.TextInput(
-		attrs={'placeholder': 'When do you want to end the reminders'}
-		),
-	)
 
 	interval_hour = forms.IntegerField(
 		widget=forms.NumberInput(
-		attrs={'placeholder': 'How long for this reminders'}
+		attrs={'placeholder': 'How many hours for this reminder'}
 		),
 	)
 
 	interval_min = forms.IntegerField(
 		widget=forms.NumberInput(
-		attrs={'placeholder': 'How long for this reminders'}
+		attrs={'placeholder': 'How many minutes for this reminder'}
 		),
 	)
 
 	class Meta:
-		model = Task
-		fields = ['day', 'start_time', 'end_time']
+		model = Reminder
+		fields = ['day', 'interval_hour', 'interval_min']

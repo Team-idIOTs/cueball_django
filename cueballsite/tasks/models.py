@@ -14,7 +14,7 @@ class Task(models.Model):
 	def __str__(self):
 		return self.name
 		
-class Reminders(models.Model):
+class Reminder(models.Model):
 	MON = 'M'
 	TUE = 'T'
 	WED = 'W'

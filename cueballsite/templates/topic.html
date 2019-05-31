@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
 
 {% block title %}
-  {{ task.name }} - Reminder {{ reminders.pk }}
+  {{ task.name }} - {{ block.super }}
 {% endblock %}
 
 {% block breadcrumb %}
   <li class="breadcrumb-item"><a href="{% url 'tasks' %}">Tasks</a></li>
   <li class="breadcrumb-item">{{ task.name }}
   	<a href="{% url 'add_reminder' task.pk %}" class="btn btn-outline-secondary btn-sm">
-	  <i class="fa fa-plus"></i> Add New Reminder for {{ task.name }}</a>
+	  <i class="fa fa-plus"></i> Add New Reminder for {{ task.name }}
+	</a>
   <li>
  
 {% endblock %}
@@ -26,6 +27,20 @@
       </tr>
     </thead>
 	<tbody>
+	{% for task in reminders.task.all %}
+	<tr>
+    <td><a href="{% url 'task_reminder' task.pk reminders.pk %}">Reminder {{ reminders.pk }}</a></td>
+	<td>{{ reminders.day }}</td>
+    <td>{{ reminders.start_time }}</td>
+    <td>{{ reminders.end_time }}</td>
+	<td>{{ reminders.interval_hour }} hours {{ reminders.interval_min }} minutes</td>	
+	{% if task.updated_at == null %}
+	  <td>{{ task.created_at }}</td>
+	{% else %}
+	  <td>{{ task.updated_at }}</td>
+	{% endif %}  
+   </tr>
+{% endfor %}
 
   </table>  
 {% endblock %}
