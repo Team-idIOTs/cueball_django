@@ -6,6 +6,20 @@ from django.http import HttpResponse
 from django.template import loader
 from .forms import SignUpForm
 
+import pyrebase
+
+config = {
+	'apiKey': "AIzaSyDnRM1b-dOfkqmaQ94BJyG-0lCo114LPmA",
+	'authDomain': "reminders-56e2c.firebaseapp.com",
+	'databaseURL': "https://reminders-56e2c.firebaseio.com",
+	'projectId': "reminders-56e2c",
+	'storageBucket': "reminders-56e2c.appspot.com",
+	'messagingSenderId': "708737581745",
+  };
+ 
+firebase = pyrebase.initialize_app(config);
+auth = firebase.auth()
+
 # Create your views here.
 def signup(request):
     if request.method == 'POST':
@@ -19,9 +33,21 @@ def signup(request):
     return render(request, 'signup.html', {'form': form})
 	
 def login(request):
-    title = "login"
-    context = {'title': title}
-    return render(request, 'login.html', context)
+	title = "login"
+	context = {'title': title}
+	try:
+		user = authe.sign_in_with_email_and_password(email,password)
+	except:
+		error="Unable to access account, try again"
+		return render(request,"login.html",{"messg":error})
+	print(user['localid'])
+	session_id=user['localid']
+	request.session['uid']=str(session_id)
+	return render(request, 'login.html', context)
+
+def logout(request):
+    auth.logout(request)
+    return render(request,'home.html')
 	
 def password_reset(request):
     title = "password_reset"

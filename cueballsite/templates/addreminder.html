@@ -2,11 +2,11 @@
 
 {% load static %}
 
-{% block title %}{{ task.name }}{% endblock %}
+{% block title %}{{ task.title }}{% endblock %}
 
 {% block breadcrumb %}
   <li class="breadcrumb-item"><a href="{% url 'tasks' %}">Tasks</a></li>
-  <li class="breadcrumb-item"><a href="{% url 'task_reminder' task.pk reminder.pk %}">{{ task.type }}</a></li>  
+  <li class="breadcrumb-item">{{ task.name }}</li>  
   <li class="breadcrumb-item active">Add New Reminder</li>
 {% endblock %}
 

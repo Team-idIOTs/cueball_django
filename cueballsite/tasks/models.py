@@ -4,15 +4,12 @@ from django.db import models
 # Create your models here.
 class Task(models.Model):
 	type = models.CharField(max_length=100)
-	name = models.CharField(max_length=30, unique=True)
+	title = models.CharField(max_length=30, unique=True)
 	audio = models.FileField(upload_to='media/', null=True, blank=True)
 	message = models.TextField(max_length=100)
 	starter = models.ForeignKey(User, related_name='task', on_delete=models.CASCADE)
-	created_at = models.DateTimeField(auto_now_add=True)
-	updated_at = models.DateTimeField(null=True)
-	
-	def __str__(self):
-		return self.name
+	created = models.DateTimeField(auto_now_add=True)
+	updated = models.DateTimeField(null=True)
 		
 class Reminder(models.Model):
 	MON = 'M'

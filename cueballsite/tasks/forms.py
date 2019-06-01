@@ -28,7 +28,7 @@ class NewTaskForm(forms.ModelForm):
 		max_length=100,
 	)	
 	
-	name = forms.CharField(
+	title = forms.CharField(
 		widget=forms.TextInput(
 			attrs={'placeholder': 'example: L-dopa, afternoon medication, stretching, boxing'}
 		),
@@ -51,7 +51,7 @@ class NewTaskForm(forms.ModelForm):
 	
 	class Meta:
 		model = Task
-		fields = ['type', 'name', 'message', 'audio']
+		fields = ['type', 'title', 'message', 'audio']
 
 class NewReminderForm(forms.ModelForm):
 	

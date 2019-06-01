@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 
 {% block title %}
-  {{ task.name }} - {{ block.super }}
+  {{ task.title }} - {{ block.super }}
 {% endblock %}
 
 {% block breadcrumb %}
   <li class="breadcrumb-item"><a href="{% url 'tasks' %}">Tasks</a></li>
-  <li class="breadcrumb-item">{{ task.name }}
+  <li class="breadcrumb-item">{{ task.title }}
   	<a href="{% url 'add_reminder' task.pk %}" class="btn btn-outline-secondary btn-sm">
-	  <i class="fa fa-plus"></i> Add New Reminder for {{ task.name }}
+	  <i class="fa fa-plus"></i> Add New Reminder for {{ task.title }}
 	</a>
   <li>
  

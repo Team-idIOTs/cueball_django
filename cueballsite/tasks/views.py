@@ -1,12 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Count
-from django.contrib.auth.models import User
-
-from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
+
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+
 from .models import Task, Reminder
 from .forms import NewTaskForm, NewReminderForm
-
 
 def home(request):
     title = "home"
@@ -44,7 +44,7 @@ def task_reminder(request, pk, reminder_pk):
 	reminder = get_object_or_404(Reminder, task_id=pk, id=reminder_pk)
 	context = {'reminder':reminder, 'title':title}
 	return render(request, 'task_reminder.html', context)
-	
+
 @login_required
 def add_task(request):
 	title = 'tasks'
@@ -58,6 +58,12 @@ def add_task(request):
 				task = task,
 				created_by = request.user,
 			)
+			# data = {
+				# 'type': type,
+				# 'title': title,
+			# }
+			# print(data)
+			# db.post(data)
 			return redirect('task_topic', task.id)
 	else:
 		form = NewTaskForm()

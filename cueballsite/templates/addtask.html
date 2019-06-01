@@ -16,3 +16,9 @@
     <button type="submit" class="btn btn-success">Add Task</button>
   </form>
 {% endblock %}
+
+
+{% block scripts %}
+  <script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
+  <script src="{% static 'task.js' %}"></script>
+  {% endblock scripts %}
